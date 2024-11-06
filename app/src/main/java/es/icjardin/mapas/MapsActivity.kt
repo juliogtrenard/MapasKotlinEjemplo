@@ -1,9 +1,7 @@
 package es.icjardin.mapas
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -32,10 +30,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         db = MarcadorDatabaseHelper(this)
 
         //Guarda los 10 marcadores en la BBDD
-        val madrid:Marcador = Marcador(0, "Madrid", 40.4165, -3.70256)
-        guardarMarcador(madrid.nombre, madrid.latitud, madrid.longitud)
-        val barcelona:Marcador = Marcador(0, "Barcelona", 41.3887900, 2.1589900)
-        guardarMarcador(barcelona.nombre, barcelona.latitud, barcelona.longitud)
+        //val madrid:Marcador = Marcador(0, "Madrid", 40.4165, -3.70256)
+        //guardarMarcador(madrid.nombre, madrid.latitud, madrid.longitud)
+        //val barcelona:Marcador = Marcador(0, "Barcelona", 41.3887900, 2.1589900)
+        //guardarMarcador(barcelona.nombre, barcelona.latitud, barcelona.longitud)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -61,13 +59,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(vitoria))
 
         // Leer los marcadores de la BBDD
-        val listaMarcadores = db.getAllMarcadores()
+        //val listaMarcadores = db.getAllMarcadores()
 
         // Añadir marcadores
-        for (marcador in listaMarcadores) {
+        /*for (marcador in listaMarcadores) {
             val m = LatLng(marcador.latitud, marcador.longitud)
             mMap.addMarker(MarkerOptions().position(m).title("Marcador en " + marcador.nombre))
-        }
+        }*/
     }
 
     /**
