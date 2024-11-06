@@ -18,6 +18,7 @@ class MarcadorDatabaseHelper (context: Context) : SQLiteOpenHelper(
         private const val   TABLE_NAME = "marcadores"
         // y ahora las columnas o atributos
         private const val   COLUMN_ID = "id"
+        private const val   COLUMN_NOMBRE = "nombre"
         private const val   COLUMN_LATITUD = "latitud"
         private const val   COLUMN_LONGITUD = "longitud"
 
@@ -30,6 +31,7 @@ class MarcadorDatabaseHelper (context: Context) : SQLiteOpenHelper(
         val createTableQuery =
             "CREATE TABLE $TABLE_NAME (" +
                     "$COLUMN_ID INTEGER PRIMARY KEY, " +
+                    "$COLUMN_NOMBRE TEXT, " +
                     "$COLUMN_LATITUD REAL, " +
                     "$COLUMN_LONGITUD REAL)"
         db?.execSQL(createTableQuery)
@@ -52,10 +54,11 @@ class MarcadorDatabaseHelper (context: Context) : SQLiteOpenHelper(
      * @param marcador el marcador a añadir
      */
 
-    fun insertNota(marcador: Marcador){
+    fun insertMarcador(marcador: Marcador){
         //la abro en modo escritura
         val db = writableDatabase
         val values = ContentValues().apply {
+            put(COLUMN_NOMBRE,       marcador.nombre)
             put(COLUMN_LATITUD,       marcador.latitud)
             put(COLUMN_LONGITUD, marcador.longitud)
             //en este caso ID es autonumérico
@@ -85,10 +88,11 @@ class MarcadorDatabaseHelper (context: Context) : SQLiteOpenHelper(
         //itera mientras que exista otro
         while (cursor.moveToNext()){
             val id =            cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+            val nombre =        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOMBRE))
             val latitud =        cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LATITUD))
             val longitud =   cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LONGITUD))
             //creamos un objeto temporal de tipo Marcador
-            val marcador =  Marcador(id, latitud, longitud)
+            val marcador =  Marcador(id, nombre, latitud, longitud)
             //añadimos la nota
             listaMarcadores.add(marcador)
         }
@@ -119,13 +123,14 @@ class MarcadorDatabaseHelper (context: Context) : SQLiteOpenHelper(
 
         //leo los datos de la consulta
         val id =            cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+        val nombre =        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOMBRE))
         val latitud =        cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LATITUD))
         val longitud =   cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LONGITUD))
 
         //cierro conexiones y devuelvo el marcador
         cursor.close()
         db.close()
-        return Marcador(id, latitud, longitud)
+        return Marcador(id, nombre, latitud, longitud)
     }
 
 
@@ -133,10 +138,11 @@ class MarcadorDatabaseHelper (context: Context) : SQLiteOpenHelper(
      * Le pasamos un marcador y actualiza su contenido, tiene una sintaxis especial, no lo hace con un update de sql normal
      */
 
-    fun updateNota(marcador: Marcador) {
+    fun updateMarcador(marcador: Marcador) {
         val db = writableDatabase
         // creamos los valores a cambiar
         val values = ContentValues().apply {
+            put(COLUMN_NOMBRE, marcador.nombre)
             put(COLUMN_LATITUD, marcador.latitud)
             put(COLUMN_LONGITUD, marcador.longitud)
         }

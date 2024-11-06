@@ -1,7 +1,9 @@
 package es.icjardin.mapas
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -12,6 +14,10 @@ import com.google.android.gms.maps.model.MarkerOptions
 import es.icjardin.mapas.databinding.ActivityMapsBinding
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+    /**
+     * el enlace con la base de datos, la necesitaremos para rellenar el comienzo
+     */
+    private lateinit var db : MarcadorDatabaseHelper
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -21,6 +27,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //inicializar la base de datos
+        db = MarcadorDatabaseHelper(this)
+
+        //Guarda los 10 marcadores en la BBDD
+        val madrid:Marcador = Marcador(0, "Madrid", 40.4165, -3.70256)
+        guardarMarcador(madrid.nombre, madrid.latitud, madrid.longitud)
+        val barcelona:Marcador = Marcador(0, "Barcelona", 41.3887900, 2.1589900)
+        guardarMarcador(barcelona.nombre, barcelona.latitud, barcelona.longitud)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -44,5 +59,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val vitoria = LatLng(42.84998, -2.67268)
         mMap.addMarker(MarkerOptions().position(vitoria).title("Marcador en Vitoria"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(vitoria))
+
+        // Leer los marcadores de la BBDD
+        val listaMarcadores = db.getAllMarcadores()
+
+        // Añadir marcadores
+        for (marcador in listaMarcadores) {
+            val m = LatLng(marcador.latitud, marcador.longitud)
+            mMap.addMarker(MarkerOptions().position(m).title("Marcador en " + marcador.nombre))
+        }
+    }
+
+    /**
+     * Asegura que los datos pasados sean validos para guardarse
+     */
+    private fun guardarMarcador(nombre: String, latitud: Double, longitud:Double){
+        val marcador = Marcador(0, nombre, latitud, longitud)
+        //lo inserto
+        db.insertMarcador(marcador)
     }
 }
