@@ -43,7 +43,7 @@ class MarcadorDatabaseHelper (context: Context) : SQLiteOpenHelper(
     /**
      * Lista de ciudades para insertar en la base de datos.
      */
-    public val ciudades: List<Marcador> = listOf(
+    val ciudades: List<Marcador> = listOf(
         Marcador(0,42.849998, -2.683333,"Vitoria-Gasteiz","Capital del País Vasco"),
         Marcador(0,40.416775, -3.703790,"Madrid","Capital de España"),
         Marcador(0,41.3784, 2.1925,"Barcelona","Ciudad portuaria en la costa noreste de España"),

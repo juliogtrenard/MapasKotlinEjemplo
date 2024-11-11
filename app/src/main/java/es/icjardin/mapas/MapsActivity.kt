@@ -18,12 +18,12 @@ import es.icjardin.mapas.databinding.ActivityMapsBinding
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
-    lateinit var dbHelper: MarcadorDatabaseHelper
+    private lateinit var dbHelper: MarcadorDatabaseHelper
 
     /**
      * Lista de marcadores de la base de datos.
      * */
-    var marcadores = mutableListOf<Marcador>()
+    private var marcadores = mutableListOf<Marcador>()
 
     /**
      * Inicializa la actividad y configura el mapa.
