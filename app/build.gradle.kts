@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -67,4 +68,10 @@ secrets {
     // "sdk.dir" is ignored by default.
     ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
     ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
+}
+
+buildscript {
+    dependencies {
+        classpath(libs.secrets.gradle.plugin)
+    }
 }
