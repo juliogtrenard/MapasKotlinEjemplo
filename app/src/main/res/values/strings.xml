@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Mapas</string>
-    <string name="title_activity_maps">MapsActivity</string>
+    <string name="app_name">Mapa</string>
+    <string name="title_activity_maps">MarcadoresMapa</string>
     <string name="marcador_image">Imagen del marcador</string>
+    <string name="regresar">Regresar</string>
 </resources>
