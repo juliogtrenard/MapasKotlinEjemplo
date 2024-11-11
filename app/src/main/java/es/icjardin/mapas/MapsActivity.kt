@@ -48,6 +48,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        // Cuando se crea la BBDD por primera vez
         for(ciudad in dbHelper.ciudades){
             dbHelper.insertar(ciudad)
         }

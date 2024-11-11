@@ -1,6 +1,7 @@
 package es.icjardin.mapas
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,15 @@ class MarcadorActivity : AppCompatActivity() {
             if (imageResource != 0) { // Verifica si la imagen existe
                 findViewById<ImageView>(R.id.marcadorImageView).setImageResource(imageResource)
             }
+        }
+
+        // Referencia al botón
+        val botonRegresar = findViewById<Button>(R.id.boton_regresar)
+
+        // Configurar el evento de clic del botón
+        botonRegresar.setOnClickListener {
+            // Cierra la actividad actual y regresa a la actividad anterior
+            finish()
         }
     }
 }
